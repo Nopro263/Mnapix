@@ -1,0 +1,10 @@
+name: Mnapixtest01
+version: '${project.version}'
+main: at.nopro263.mnapixtest01.Main
+api-version: 1.19
+
+commands:
+  test:
+    permission: NOBODY
+  joinserver:
+    aliases: ["hub", "dev"]
