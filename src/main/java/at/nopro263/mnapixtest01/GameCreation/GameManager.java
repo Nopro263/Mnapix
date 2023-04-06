@@ -64,7 +64,7 @@ public class GameManager {
 
     public void stop() {
         for (Game game : games) {
-            game.onEnd();
+            game.onEnd(true);
         }
     }
 }

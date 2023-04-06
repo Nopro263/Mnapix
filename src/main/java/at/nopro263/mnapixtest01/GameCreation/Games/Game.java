@@ -67,15 +67,19 @@ public abstract class Game {
             player.teleport(WorldCoordinateMapper.getSpawn());
         }
         if(players.size() == 0) {
-            onEnd();
+            onEnd(false);
         }
     }
 
-    public void onEnd() {
+    public void onEnd(boolean shouldTP) {
         int SIDE = 50;
         BuildHelper.fill(location.getWorld(), location.getBlockX()-SIDE/2, location.getBlockY()-SIDE/2, location.getBlockZ()-SIDE/2, SIDE, SIDE, SIDE, Material.AIR);
 
-
+        if(shouldTP) {
+            for(Player player : players) {
+                player.teleport(WorldCoordinateMapper.getSpawn());
+            }
+        }
         //BuildHelper.fill(location.getWorld(), location.getBlockX()+SIDE/2, location.getBlockY()+SIDE/2, location.getBlockZ()+SIDE/2, SIDE*2, SIDE*2, SIDE*2, Material.AIR);
         Main.getGameManager().removeGame(this);
     }

@@ -33,7 +33,7 @@ public class Game_PVP_SUMODUELS extends Game{
     @Override
     public void onTick() {
 
-        // TODO add Game Mechanics
+        //TODO add Game Mechanics
 
         for (Player player : players) {
             player.sendMessage("Sumo");
