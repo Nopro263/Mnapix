@@ -13,7 +13,7 @@ public class Timer {
         started = true;
     }
     public boolean hasEnded() {
-        return time <= 0;
+        return time == 0;
     }
     public boolean hasStarted() {
         return started;

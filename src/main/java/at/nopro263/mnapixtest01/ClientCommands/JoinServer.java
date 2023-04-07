@@ -52,6 +52,7 @@ public class JoinServer implements CommandExecutor {
     }
     private void customWorldCommands(Player player, String game) {
         player.setGameMode(GameMode.ADVENTURE);
+        player.setInvulnerable(false);
         player.setAllowFlight(false);
         switch (game) {
             case "world_dev": {

@@ -33,10 +33,10 @@ public class Game_PVP_OPDUELS extends Game{
     private void tp() {
         if(players.size() >= MAXPLAYERS) {
             Location t1 = location.clone();
-            t1 = t1.subtract(0,0,19);
+            //t1 = t1.subtract(0,0,19);
             players.get(0).teleport(t1);
             t1 = location.clone();
-            t1 = t1.add(0,0,19);
+            //t1 = t1.add(0,0,19);
             t1.setYaw(180);
             players.get(1).teleport(t1);
         }
@@ -47,14 +47,17 @@ public class Game_PVP_OPDUELS extends Game{
 
         // TODO add Game Mechanics
 
-        if(isFull() && timer.hasStarted() && !hasStarted) { // Timer not started
-            timer.setTime(20*5);
+        if(!isFull() && timer.hasStarted() || !isFull() && hasStarted) {
+            hasStarted = false;
+            timer = new Timer();
+        }
+
+        if(isFull() && !timer.hasStarted() && !hasStarted) { // Timer not started
+            timer.setTime(20 * 5);
             tp();
         }
-        if(isFull()) {
-            timer.tick();
-        }
-        if(timer.hasStarted()) {
+
+        if(isFull() && timer.hasStarted() && !hasStarted) {
             if(timer.modulo() == 0) {
                 String c = "";
                 switch (timer.seconds()) {
@@ -71,9 +74,15 @@ public class Game_PVP_OPDUELS extends Game{
                 }
             }
         }
-        if(timer.hasEnded()) {
+        if(isFull()) {
+            timer.tick();
+        }
+        if(isFull() && timer.hasEnded() && !hasStarted) {
             hasStarted = true;
             tp();
+            for(Player player : players) {
+                player.setInvulnerable(false);
+            }
         }
 
         /*if(timer != -1) {
@@ -110,5 +119,10 @@ public class Game_PVP_OPDUELS extends Game{
         }
 
         super.onTick();
+    }
+    @Override
+    public void onPlayerJoin(Player player) {
+        player.setInvulnerable(true);
+        super.onPlayerJoin(player);
     }
 }
