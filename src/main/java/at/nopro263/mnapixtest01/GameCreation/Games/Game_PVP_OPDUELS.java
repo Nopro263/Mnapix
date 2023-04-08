@@ -2,10 +2,12 @@ package at.nopro263.mnapixtest01.GameCreation.Games;
 
 import at.nopro263.mnapixtest01.GameCreation.GameType;
 import at.nopro263.mnapixtest01.GameCreation.Timer;
+import at.nopro263.mnapixtest01.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class Game_PVP_OPDUELS extends Game{
 
@@ -31,14 +33,14 @@ public class Game_PVP_OPDUELS extends Game{
     }
 
     private void tp() {
-        if(players.size() >= MAXPLAYERS) {
+        if(alivePlayers.size() >= MAXPLAYERS) {
             Location t1 = location.clone();
             //t1 = t1.subtract(0,0,19);
-            players.get(0).teleport(t1);
+            alivePlayers.get(0).teleport(t1);
             t1 = location.clone();
             //t1 = t1.add(0,0,19);
             t1.setYaw(180);
-            players.get(1).teleport(t1);
+            alivePlayers.get(1).teleport(t1);
         }
     }
 
@@ -68,7 +70,7 @@ public class Game_PVP_OPDUELS extends Game{
                     case 1: c = ChatColor.DARK_RED.toString(); break;
                 }
                 if(timer.seconds() != 0) {
-                    for (Player player : players) {
+                    for (Player player : alivePlayers) {
                         player.sendTitle(c + timer.seconds(), "", 5, 20, 5);
                     }
                 }
@@ -80,42 +82,22 @@ public class Game_PVP_OPDUELS extends Game{
         if(isFull() && timer.hasEnded() && !hasStarted) {
             hasStarted = true;
             tp();
-            for(Player player : players) {
+            for(Player player : alivePlayers) {
                 player.setInvulnerable(false);
             }
         }
 
-        /*if(timer != -1) {
-            if(timer % 20 == 0) {
-                String c = "";
-                switch (timer / 20) {
-                    case 5:
-                    case 4: c = ChatColor.YELLOW.toString(); break;
-                    case 3: c = ChatColor.GOLD.toString(); break;
-                    case 2: c = ChatColor.RED.toString(); break;
-                    case 1: c = ChatColor.DARK_RED.toString(); break;
-                }
-                if(timer / 20 != 0) {
-                    for (Player player : players) {
-                        player.sendTitle(c + (timer / 20), "", 5, 20, 5);
-                    }
-                }
-            }
-            if(timer == 0) {
-                Location t1 = location.clone();
-                t1 = t1.subtract(0,0,19);
-                players.get(0).teleport(t1);
-                t1 = location.clone();
-                t1 = t1.add(0,0,19);
-                t1.setYaw(180);
-                players.get(1).teleport(t1);
-                hasStarted = true;
-            }
-            timer--;
-        }*/
-
-        for (Player player : players) {
+        for (Player player : alivePlayers) {
             player.sendMessage("Op");
+        }
+
+        if(alivePlayers.size() == 1 && isFull()) {
+            alivePlayers.get(0).sendMessage("Du hast gewonnen");
+            for(Player player : players) {
+                onPlayerLeave(player, Worlds.pvp, false);
+            }
+            players.clear();
+            onEnd(false);
         }
 
         super.onTick();
@@ -124,5 +106,12 @@ public class Game_PVP_OPDUELS extends Game{
     public void onPlayerJoin(Player player) {
         player.setInvulnerable(true);
         super.onPlayerJoin(player);
+    }
+
+    @Override
+    public void onPlayerDeath(Player player) {
+
+        player.sendMessage("You died");
+        super.onPlayerDeath(player);
     }
 }

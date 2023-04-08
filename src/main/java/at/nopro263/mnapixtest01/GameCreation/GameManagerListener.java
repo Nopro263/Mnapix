@@ -22,28 +22,17 @@ public class GameManagerListener implements Listener {
 
     @EventHandler
     public void OnPlayerLeaveHandler(PlayerQuitEvent event) {
-        Main.getGameManager().leaveGame(event.getPlayer(), true);
+        Main.getGameManager().leaveGame(event.getPlayer(), Worlds.lobby);
     }
-    /*@EventHandler
-    public void OnDeath(PlayerDeathEvent event) {
-        event.getEntity().spigot().respawn();
-    }
-    @EventHandler
-    public void OnRespawn(PlayerRespawnEvent event) {
-        //event.getPlayer().setHealth(20);
-        event.setRespawnLocation(new Location(event.getPlayer().getWorld(),
-                WorldCoordinateMapper.getCoordinate(event.getPlayer().getWorld().getName())[0],
-                WorldCoordinateMapper.getCoordinate(event.getPlayer().getWorld().getName())[1],
-                WorldCoordinateMapper.getCoordinate(event.getPlayer().getWorld().getName())[2]));
-
-        //event.getPlayer().teleport(WorldCoordinateMapper.getSpawn());
-    }*/
     @EventHandler
     public void OnDamage(EntityDamageEvent event) {
         if(!(event.getEntity() instanceof Player)) {
             return;
         }
         Player p = (Player) event.getEntity();
+        if(Main.getGameManager().getGame(p) == null) {
+            return;
+        }
         if(p.getHealth() - event.getDamage() <= 0) {
             event.setCancelled(true);
             p.setHealth(20);
@@ -80,7 +69,7 @@ public class GameManagerListener implements Listener {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        Main.getGameManager().leaveGame(event.getPlayer(), false);
+                        Main.getGameManager().leaveGame(event.getPlayer(), null);
                         Main.getGameManager().joinGame(event.getPlayer(), finalGameType);
                         //event.getPlayer().teleport(WorldCoordinateMapper.getSpawn());
                     }

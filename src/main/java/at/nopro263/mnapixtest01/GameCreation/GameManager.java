@@ -3,6 +3,7 @@ package at.nopro263.mnapixtest01.GameCreation;
 import at.nopro263.mnapixtest01.GameCreation.Games.Game;
 import at.nopro263.mnapixtest01.Main;
 import at.nopro263.mnapixtest01.Worlds;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -58,10 +59,10 @@ public class GameManager {
         }
     }
 
-    public void leaveGame(Player player, boolean shouldTP) {
+    public void leaveGame(Player player, World to) {
         for (Game game : games) {
             if(game.hasPlayer(player)) {
-                game.onPlayerLeave(player, shouldTP);
+                game.onPlayerLeave(player, to, true);
             }
         }
     }

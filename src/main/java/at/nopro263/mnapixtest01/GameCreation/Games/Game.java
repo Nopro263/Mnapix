@@ -1,14 +1,13 @@
 package at.nopro263.mnapixtest01.GameCreation.Games;
 
+import at.nopro263.mnapixtest01.ClientCommands.JoinServer;
 import at.nopro263.mnapixtest01.GameCreation.GameManager;
 import at.nopro263.mnapixtest01.GameCreation.GameType;
 import at.nopro263.mnapixtest01.GameCreation.StructureLoader;
 import at.nopro263.mnapixtest01.Main;
 import at.nopro263.mnapixtest01.WorldCoordinateMapper;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import at.nopro263.mnapixtest01.Worlds;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -51,6 +50,7 @@ public abstract class Game {
     }
 
     public void onPlayerDeath(Player player) {
+        System.out.println(player.getName() + " has died");
         alivePlayers.remove(player);
     }
 
@@ -68,13 +68,17 @@ public abstract class Game {
         }
     }
 
-    public void onPlayerLeave(Player player, boolean shouldTP) {
-        players.remove(player);
-        alivePlayers.remove(player);
-        if(shouldTP) {
-            player.teleport(WorldCoordinateMapper.getSpawn());
+    public void onPlayerLeave(Player player, World to, boolean shouldRemove) {
+        if(shouldRemove) {
+            players.remove(player);
         }
-        if(players.size() == 0) {
+        alivePlayers.remove(player);
+        if(to != null) {
+            JoinServer.customWorldCommands(player, to.getName());
+            Integer[] c = WorldCoordinateMapper.getCoordinate(to.getName());
+            player.teleport(new Location(to, c[0], c[1], c[2]));
+        }
+        if(players.size() == 0 && shouldRemove || players.size() == 1 && !shouldRemove) {
             onEnd(false);
         }
     }

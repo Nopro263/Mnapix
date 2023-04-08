@@ -10,6 +10,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import java.util.Objects;
 
@@ -43,17 +44,21 @@ public class JoinServer implements CommandExecutor {
         if(Bukkit.getServer().getWorld(game) == null) {
             return false;
         } else {
-            Main.getGameManager().leaveGame(player, false);
+            Main.getGameManager().leaveGame(player, null);
             Integer[] c = WorldCoordinateMapper.getCoordinate(game);
             player.teleport(new Location(Bukkit.getServer().getWorld(game), c[0], c[1], c[2]));
             customWorldCommands(player, game);
             return true;
         }
     }
-    private void customWorldCommands(Player player, String game) {
+    public static void customWorldCommands(Player player, String game) {
         player.setGameMode(GameMode.ADVENTURE);
         player.setInvulnerable(false);
         player.setAllowFlight(false);
+        player.setFallDistance(0);
+        player.setFireTicks(0);
+        player.setVisualFire(false);
+        player.setVelocity(new Vector(0,0,0));
         switch (game) {
             case "world_dev": {
                 player.setGameMode(GameMode.SPECTATOR);
