@@ -33,8 +33,9 @@ public class GameManagerListener implements Listener {
         if(Main.getGameManager().getGame(p) == null) {
             return;
         }
-        if(p.getHealth() - event.getDamage() <= 0) {
+        if(p.getHealth() - event.getFinalDamage() <= 0) {
             event.setCancelled(true);
+            System.out.println(event.getFinalDamage());
             p.setHealth(20);
             p.setGameMode(GameMode.SPECTATOR);
             Main.getGameManager().kill(p);

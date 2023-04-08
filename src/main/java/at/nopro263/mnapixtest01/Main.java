@@ -6,10 +6,8 @@ import at.nopro263.mnapixtest01.GameCreation.GameManager;
 import at.nopro263.mnapixtest01.GameCreation.GameManagerListener;
 import at.nopro263.mnapixtest01.GameCreation.Games.BuildHelper;
 import at.nopro263.mnapixtest01.StaffCommands.STest;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.WorldCreator;
+import org.bukkit.*;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
@@ -67,7 +65,9 @@ public final class Main extends JavaPlugin {
         getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "Dimensiones loaded");
 
         //BuildHelper.fill(Worlds.pvp, new Location(Worlds.pvp, 20, 20, 20), 10, 10, 10, Material.DIORITE);
-
+        for(Player player : Bukkit.getOnlinePlayers()) {
+            player.setFoodLevel(20);
+        }
     }
 
     @Override

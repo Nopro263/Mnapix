@@ -70,8 +70,6 @@ public class Game_PVP_OPDUELS extends Game{
     @Override
     public void onTick() {
 
-        // TODO add Game Mechanics
-
         if(!isFull() && timer.hasStarted() || !isFull() && hasStarted) {
             hasStarted = false;
             timer = new Timer();
