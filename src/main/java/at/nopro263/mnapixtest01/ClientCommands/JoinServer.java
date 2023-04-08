@@ -59,6 +59,7 @@ public class JoinServer implements CommandExecutor {
         player.setFireTicks(0);
         player.setVisualFire(false);
         player.setVelocity(new Vector(0,0,0));
+        player.getInventory().clear();
         switch (game) {
             case "world_dev": {
                 player.setGameMode(GameMode.SPECTATOR);

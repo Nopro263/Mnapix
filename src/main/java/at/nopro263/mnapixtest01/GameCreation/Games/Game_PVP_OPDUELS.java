@@ -6,8 +6,9 @@ import at.nopro263.mnapixtest01.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.inventory.ItemStack;
 
 public class Game_PVP_OPDUELS extends Game{
 
@@ -44,6 +45,28 @@ public class Game_PVP_OPDUELS extends Game{
         }
     }
 
+    private void equip(Player player) {
+        ItemStack s = new ItemStack(Material.DIAMOND_HELMET);
+        s.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+        player.getInventory().setHelmet(s);
+
+        s = new ItemStack(Material.DIAMOND_CHESTPLATE);
+        s.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+        player.getInventory().setChestplate(s);
+
+        s = new ItemStack(Material.DIAMOND_LEGGINGS);
+        s.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+        player.getInventory().setLeggings(s);
+
+        s = new ItemStack(Material.DIAMOND_BOOTS);
+        s.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+        player.getInventory().setBoots(s);
+
+        s = new ItemStack(Material.DIAMOND_AXE);
+        s.addEnchantment(Enchantment.DAMAGE_ALL, 5);
+        player.getInventory().setItem(0, s);
+    }
+
     @Override
     public void onTick() {
 
@@ -55,6 +78,11 @@ public class Game_PVP_OPDUELS extends Game{
         }
 
         if(isFull() && !timer.hasStarted() && !hasStarted) { // Timer not started
+
+            for(Player player : players) {
+                equip(player);
+            }
+
             timer.setTime(20 * 5);
             tp();
         }
