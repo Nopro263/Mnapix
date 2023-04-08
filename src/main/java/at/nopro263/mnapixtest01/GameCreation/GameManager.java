@@ -50,6 +50,14 @@ public class GameManager {
         return null;
     }
 
+    public void kill(Player player) {
+        for(Game game : games) {
+            if(game.hasPlayer(player)) {
+                game.onPlayerDeath(player);
+            }
+        }
+    }
+
     public void leaveGame(Player player, boolean shouldTP) {
         for (Game game : games) {
             if(game.hasPlayer(player)) {

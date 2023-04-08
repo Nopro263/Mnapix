@@ -48,6 +48,7 @@ public class GameManagerListener implements Listener {
             event.setCancelled(true);
             p.setHealth(20);
             p.setGameMode(GameMode.SPECTATOR);
+            Main.getGameManager().kill(p);
         }
     }
     @EventHandler

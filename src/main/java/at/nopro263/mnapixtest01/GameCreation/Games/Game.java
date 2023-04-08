@@ -6,6 +6,7 @@ import at.nopro263.mnapixtest01.GameCreation.StructureLoader;
 import at.nopro263.mnapixtest01.Main;
 import at.nopro263.mnapixtest01.WorldCoordinateMapper;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -22,6 +23,7 @@ public abstract class Game {
     }
 
     protected List<Player> players = new ArrayList<>();
+    protected List<Player> alivePlayers = new ArrayList<>();
     protected Location location;
     public boolean ended = false;
 
@@ -44,7 +46,12 @@ public abstract class Game {
 
     public void onPlayerJoin(Player player) {
         players.add(player);
+        alivePlayers.add(player);
         player.teleport(location);
+    }
+
+    public void onPlayerDeath(Player player) {
+        alivePlayers.remove(player);
     }
 
     public void onTick() {
@@ -63,6 +70,7 @@ public abstract class Game {
 
     public void onPlayerLeave(Player player, boolean shouldTP) {
         players.remove(player);
+        alivePlayers.remove(player);
         if(shouldTP) {
             player.teleport(WorldCoordinateMapper.getSpawn());
         }
