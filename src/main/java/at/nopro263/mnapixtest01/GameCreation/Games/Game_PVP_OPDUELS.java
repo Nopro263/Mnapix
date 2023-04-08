@@ -36,10 +36,10 @@ public class Game_PVP_OPDUELS extends Game{
     private void tp() {
         if(alivePlayers.size() >= MAXPLAYERS) {
             Location t1 = location.clone();
-            //t1 = t1.subtract(0,0,19);
+            t1 = t1.subtract(0,0,19);
             alivePlayers.get(0).teleport(t1);
             t1 = location.clone();
-            //t1 = t1.add(0,0,19);
+            t1 = t1.add(0,0,19);
             t1.setYaw(180);
             alivePlayers.get(1).teleport(t1);
         }
