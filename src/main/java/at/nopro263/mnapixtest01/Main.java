@@ -8,6 +8,10 @@ import at.nopro263.mnapixtest01.GameCreation.Games.BuildHelper;
 import at.nopro263.mnapixtest01.StaffCommands.STest;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
@@ -75,5 +79,11 @@ public final class Main extends JavaPlugin {
         // Plugin shutdown logic
 
         gameManager.stop();
+    }
+    @EventHandler
+    public void onJump(PlayerInteractEvent event) {
+        if(event.getAction() == Action.PHYSICAL) {
+            event.setCancelled(true);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package at.nopro263.mnapixtest01.GameCreation.Games;
 
+import at.nopro263.mnapixtest01.CUtils;
 import at.nopro263.mnapixtest01.ClientCommands.JoinServer;
 import at.nopro263.mnapixtest01.GameCreation.GameManager;
 import at.nopro263.mnapixtest01.GameCreation.GameType;
@@ -46,7 +47,7 @@ public abstract class Game {
     public void onPlayerJoin(Player player) {
         players.add(player);
         alivePlayers.add(player);
-        player.teleport(location);
+        player.teleport(CUtils.getHighestElevation(location));
     }
 
     public void onPlayerDeath(Player player) {
