@@ -47,19 +47,19 @@ public class Game_PVP_OPDUELS extends Game{
 
     private void equip(Player player) {
         ItemStack s = new ItemStack(Material.DIAMOND_HELMET);
-        s.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+        //s.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
         player.getInventory().setHelmet(s);
 
         s = new ItemStack(Material.DIAMOND_CHESTPLATE);
-        s.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+        //s.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
         player.getInventory().setChestplate(s);
 
         s = new ItemStack(Material.DIAMOND_LEGGINGS);
-        s.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+        //s.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
         player.getInventory().setLeggings(s);
 
         s = new ItemStack(Material.DIAMOND_BOOTS);
-        s.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+        //s.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
         player.getInventory().setBoots(s);
 
         s = new ItemStack(Material.DIAMOND_AXE);
